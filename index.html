@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>구구단 아케이드 넘버 매트릭스 | 10x10 시각적 곱셈 실험실</title>
+  <meta name="description" content="10x10 네온 격자를 직접 드래그하며 곱셈의 면적 모델과 교환법칙을 시각적으로 체득하는 인터랙티브 구구단 연산 아케이드입니다.">
+  <link rel="canonical" href="https://times-table-matrix.enjoy-onepage.com/">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1204958742918459" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Header Banner (Max 90px Clamped) -->
+  <aside class="ad-top-wrapper" aria-label="스폰서 링크">
+    <div class="ad-top-box">
+      <ins class="adsbygoogle"
+           style="display:block; max-height:90px;"
+           data-ad-client="ca-pub-1204958742918459"
+           data-ad-slot="3824727725"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </aside>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-row">
+        <span class="brand-badge">초등 수학 인터랙티브 2.2</span>
+        <h1 class="app-title">구구단 아케이드 넘버 매트릭스</h1>
+      </div>
+      <p class="app-subtitle">10×10 격자 면적 모델과 90도 회전 모핑으로 깨닫는 곱셈 교환법칙</p>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <nav class="mode-tabs" role="tablist">
+      <button class="tab-btn active" id="tabExplore" role="tab">자유 탐구</button>
+      <button class="tab-btn" id="tabArcade" role="tab">60초 아케이드</button>
+      <button class="tab-btn" id="tabHeatmap" role="tab">취약 단 분석</button>
+    </nav>
+
+    <!-- Exploration Panel -->
+    <section class="panel-section" id="panelExplore">
+      <div class="calc-readout-card">
+        <div class="formula-badge" id="expFormulaBadge">4행 × 6열 = 24칸</div>
+        <div class="formula-desc" id="expFormulaDesc">4개씩 6묶음은 24와 크기가 같습니다.</div>
+        <div class="control-actions">
+          <button class="action-btn secondary" id="btnRotate">90° 회전 (교환법칙)</button>
+          <button class="action-btn secondary" id="btnResetGrid">격자 리셋</button>
+          <button class="sound-toggle-btn" id="btnSoundToggle" aria-label="소리 토글">소리 켜짐</button>
+        </div>
+      </div>
+
+      <div class="matrix-wrapper">
+        <div class="matrix-grid" id="matrixGrid"></div>
+      </div>
+      <div class="matrix-hint">격자 위를 마우스나 손가락으로 드래그하여 직사각형을 만들어보세요!</div>
+    </section>
+
+    <!-- Arcade Panel -->
+    <section class="panel-section hidden" id="panelArcade">
+      <div class="arcade-hud">
+        <div class="hud-item">
+          <span class="hud-label">남은 시간</span>
+          <span class="hud-val time" id="arcadeTimer">60s</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">현재 점수</span>
+          <span class="hud-val score" id="arcadeScore">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">연속 콤보</span>
+          <span class="hud-val combo" id="arcadeCombo">0x</span>
+        </div>
+      </div>
+
+      <div class="arcade-card">
+        <div class="arcade-quiz" id="arcadeQuestion">준비 되셨나요?</div>
+        <div class="arcade-answer-box">
+          <input type="number" id="arcadeInput" placeholder="정답 입력" disabled />
+          <button class="action-btn primary" id="btnArcadeSubmit" disabled>확인</button>
+        </div>
+        <button class="action-btn accent full" id="btnArcadeStart">아케이드 시작하기</button>
+      </div>
+
+      <div class="numpad-grid" id="arcadeNumpad">
+        <button class="num-btn" data-val="1">1</button>
+        <button class="num-btn" data-val="2">2</button>
+        <button class="num-btn" data-val="3">3</button>
+        <button class="num-btn" data-val="4">4</button>
+        <button class="num-btn" data-val="5">5</button>
+        <button class="num-btn" data-val="6">6</button>
+        <button class="num-btn" data-val="7">7</button>
+        <button class="num-btn" data-val="8">8</button>
+        <button class="num-btn" data-val="9">9</button>
+        <button class="num-btn action" data-val="clear">C</button>
+        <button class="num-btn" data-val="0">0</button>
+        <button class="num-btn action" data-val="back">←</button>
+      </div>
+    </section>
+
+    <!-- Heatmap Panel -->
+    <section class="panel-section hidden" id="panelHeatmap">
+      <div class="heatmap-header">
+        <h2>구구단 2단~9단 오답 취약도</h2>
+        <p>자주 틀리거나 응답 시간이 지연된 단이 붉은색으로 점등됩니다.</p>
+      </div>
+      <div class="heatmap-grid" id="heatmapGrid"></div>
+      <button class="action-btn secondary full" id="btnResetStats">학습 통계 초기화</button>
+    </section>
+
+    <!-- In-Article Ad -->
+    <aside class="ad-mid-wrapper" aria-label="스폰서 링크">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-1204958742918459"
+           data-ad-slot="1186914926"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <!-- Educational Explanation -->
+    <section class="edu-card">
+      <h2>곱셈의 본질: 왜 면적 모델인가요?</h2>
+      <p>구구단을 단순 노래로만 외우면 $7 	imes 8$을 잊었을 때 $7 	imes 1$부터 다시 세어야 합니다. 하지만 가로 8칸, 세로 7칸의 직사각형 타일로 곱셈을 이해하면 90도 돌려도($8 	imes 7$) 타일 개수가 변하지 않는다는 <strong>곱셈 교환법칙</strong>을 직관적으로 깨닫게 됩니다.</p>
+    </section>
+  </main>
+
+  <!-- Multiplex Footer Ad -->
+  <aside class="ad-bot-wrapper" aria-label="스폰서 추천">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1204958742918459"
+         data-ad-slot="3416334507"
+         data-ad-format="autorelaxed"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </aside>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <p class="copyright">© 2026 구구단 아케이드 넘버 매트릭스. All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="about.html">도구 소개</a>
+        <a href="privacy.html">개인정보처리방침</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

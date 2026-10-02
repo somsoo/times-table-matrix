@@ -1,0 +1,8 @@
+{
+  "name": "구구단 아케이드 넘버 매트릭스",
+  "short_name": "구구단매트릭스",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#f59e0b"
+}
